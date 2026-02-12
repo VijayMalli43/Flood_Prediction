@@ -5,6 +5,11 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
+# Import sklearn modules BEFORE loading any models
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.preprocessing import StandardScaler
+import sklearn.tree._tree
+
 app = Flask(__name__)
 
 # Lazy load model and scaler
@@ -15,10 +20,6 @@ scaler = None
 def load_models():
     global model, scaler
     if model is None:
-        try:
-            import sklearn.ensemble._gb_losses
-        except:
-            pass
         model = load(os.path.join(base_dir, "floods.save"))
         scaler = load(os.path.join(base_dir, "transform.save"))
 
